@@ -5,7 +5,7 @@ Esta é uma aplicação web para tradução de textos usando o Ollama e o modelo
 ## Clonando o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/tradutor_ollama_deepseek.git
+git clone git@github.com:matuza1977/tradutor_ollama_deepseek.git
 cd tradutor_ollama_deepseek
 ```
 
