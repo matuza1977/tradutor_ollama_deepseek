@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradutor com IA Local</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .loading {
+            display: none;
+        }
+        .loading.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Tradutor com IA Local</h1>
+        
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="source_lang">
+                    Idioma de Origem
+                </label>
+                <select id="source_lang" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="en">Inglês</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Espanhol</option>
+                    <option value="fr">Francês</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="target_lang">
+                    Idioma de Destino
+                </label>
+                <select id="target_lang" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="pt">Português</option>
+                    <option value="en">Inglês</option>
+                    <option value="es">Espanhol</option>
+                    <option value="fr">Francês</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="text_to_translate">
+                    Texto para Traduzir
+                </label>
+                <textarea id="text_to_translate" rows="4" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+
+            <button id="translate_btn" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Traduzir
+            </button>
+
+            <div class="loading mt-4 text-center">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                <p class="mt-2 text-gray-600">Traduzindo...</p>
+            </div>
+
+            <div class="mt-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    Tradução
+                </label>
+                <div id="translation_result" class="w-full px-3 py-2 border rounded-lg bg-gray-50 min-h-[100px]">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('translate_btn').addEventListener('click', async () => {
+            const text = document.getElementById('text_to_translate').value;
+            const sourceLang = document.getElementById('source_lang').value;
+            const targetLang = document.getElementById('target_lang').value;
+            const loading = document.querySelector('.loading');
+            const resultDiv = document.getElementById('translation_result');
+
+            if (!text) {
+                alert('Por favor, insira um texto para traduzir');
+                return;
+            }
+
+            loading.classList.add('active');
+            resultDiv.textContent = '';
+
+            try {
+                const response = await fetch('/translate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text,
+                        source_lang: sourceLang,
+                        target_lang: targetLang
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.textContent = data.translation;
+                } else {
+                    resultDiv.textContent = `Erro: ${data.error}`;
+                }
+            } catch (error) {
+                resultDiv.textContent = `Erro: ${error.message}`;
+            } finally {
+                loading.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html> 
