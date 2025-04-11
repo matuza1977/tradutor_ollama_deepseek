@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Logs
+*.log
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de saída
+text_files_pt/

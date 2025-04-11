@@ -13,7 +13,7 @@ Esta é uma aplicação web para tradução de textos usando o Ollama e o modelo
 Para instalar todas as dependências e iniciar o projeto automaticamente, execute o script de instalação:
 
 ```powershell
-.\setup.ps1
+[setup.ps1](http://_vscodecontentref_/1)
 ```
 
 O script irá:
@@ -67,4 +67,4 @@ http://localhost:5000
 - A tradução é feita localmente usando o modelo DeepSeek através do Ollama
 - O tempo de resposta pode variar dependendo do tamanho do texto e da capacidade do seu hardware
 - Certifique-se de ter memória RAM suficiente para rodar o modelo
-- O script de instalação requer privilégios de administrador para instalar o Python e o Ollama 
+- O script de instalação requer privilégios de administrador para instalar o Python e o Ollama
